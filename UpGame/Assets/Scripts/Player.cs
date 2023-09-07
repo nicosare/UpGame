@@ -11,19 +11,16 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        rb.isKinematic = true;
     }
 
 
     public void JumpLeft()
     {
-        rb.isKinematic = false;
         rb.velocity = new Vector2(-1, 2.5f) * force;
     }
 
     public void JumpRight()
     {
-        rb.isKinematic = false;
         rb.velocity = new Vector2(1, 2.5f) * force;
     }
 
@@ -33,5 +30,11 @@ public class Player : MonoBehaviour
             JumpLeft();
         else if (Input.GetKeyDown(KeyCode.D))
             JumpRight();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.tag == "Obstacle")
+            Destroy(gameObject);
     }
 }
